@@ -1,0 +1,137 @@
+<html>
+
+<head>
+    <style>
+        @font-face {
+            font-family: "roboto_regular";
+            src: url("Roboto-Regular.ttf") format("truetype");
+            font-stretch: normal;
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: sans-serif;
+            font-size: 16pt;
+            line-height: 17pt;
+            letter-spacing: 2pt;
+            text-indent: 5pt;
+            hyphens: manual;
+            word-wrap: normal;
+            word-spacing: 0pt;
+            /*text-shadow: 0pt 0pt 0 red;*/
+            border: 5pt solid darkgreen;
+            outline: 5pt solid green;
+            outline-offset: 1pt;
+            border-radius: 2%;
+            resize: horizontal;
+            /*text-align: center;*/
+            background-image: url(background_image.png);
+            /*background: linear-gradient(180deg,white 50%,rgba(0%,100%,0%,0.5) 100%);*/
+            background-repeat: repeat;
+        }
+        article {
+            padding: 10pt;
+            /*border: 2pt solid red;*/
+        }
+        div {
+            margin: 10mm;
+            padding: 5mm;
+            border: 2mm solid black;
+            width: 50mm;
+            height: 50mm;
+            display: inline-block;
+            /*transform: rotate(10deg);*/
+            font-family: roboto_regular, sans-serif;
+            /*float:left;*/
+            /*transform: scale(1.2);*/
+            /*transform: skew(40deg);*/
+            resize: both;
+            overflow: scroll;
+/*          -webkit-column-count:3;
+            -webkit-column-gap: 5pt;
+            -webkit-column-rule: 3px solid black;   */      
+            
+        }
+        div:nth-child(odd) {
+            font-size: 17pt;
+        }
+        div::first-letter {
+            font-size: 20pt;
+            color: blue;
+        }
+        div::first-line {
+            font-weight: 900;
+        }
+        div::before {
+            /*content: "boxtext: ";*/
+        }
+        div:first-child {
+           border: 5pt solid black; 
+        }
+        div:nth-child(2){
+           border: 8pt solid black;            
+        }
+        div:last-child {
+            border: 10pt solid black; 
+        }
+        div:nth-last-child(1) {
+            border: 12pt solid black; 
+        } 
+        body:not(div) {
+            /*something*/
+        }
+        ::selection {
+            font-size: 20pt;
+            font-weight: 800;
+            color: lightgreen;
+        }
+        a:link {
+            color: blue;
+        }
+        a:visited {
+            color: purple;
+        }
+        a:focus {
+            font-weight: bold;
+        }
+        a:hover {
+            color: green;
+        }
+        a:active {
+            color: darkgreen;
+        }
+        input:enabled {
+            background-color: rgba(90%,80%,50%,1);
+        }
+        #circle {
+            width: 35mm;
+            height: 35mm;
+            background-color: lightblue;
+            border-radius: 40%;
+        }
+        #retangle {
+            width: 35mm;
+            height: 35mm;
+            background-color: lightblue;
+        }
+        #one {
+            position: absolute;
+            top: 5mm;
+            left: 270mm;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <div id=one>One</div>
+        <div id=two>Two</div>
+        <div id=three>Three</div>
+        <div id=four>Four</div>
+    </article>
+    <a href="http://nikondi.com" target="_blank">Nikondi homepage</a>
+    <input id=first_name name=first_name type=text />
+    <div id=circle></<div>
+    <div id=rectangle></<div>
+</body>
+
+</html>

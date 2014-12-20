@@ -1,0 +1,182 @@
+<html>
+<title></title>
+
+<head>
+	<style>
+/*		input:required {
+			border-color: gray;
+		}*/		
+		input:invalid:focus {
+			border: solid 4px red;
+		}
+		.validated_fine {
+			border:2px solid green;
+		}
+		.validation_error {
+			border:2px solid red;
+		}
+		
+	</style>
+	<script>
+		function validate_input(e) {
+			if (validate_score() && validate_first_name() && validate_passwords()) {
+				return true;
+			}
+			else {
+				return false;	
+			}
+		}
+	
+		function validate_score() {
+			var node = document.getElementById("score");
+			var clean_value=node.value.toString().trim();
+			var intTestRegex = /^\s*(\+|-)?\d+\s*$/; //+ or - numbers with leading an trailing spaces
+			var result = intTestRegex.test(clean_value);
+			node.value = clean_value;
+			if (result===false) {
+				node.className +=" validated_error";
+				return false;
+			}
+			else {
+				node.className +=" validated_fine";
+				return true;
+			}
+		}
+		
+		function validate_first_name() {
+			var node =  document.getElementById("first_name");
+			var node_value = document.getElementById("first_name").value;
+			var whitespace_test = /^\w+$/;
+			var result = whitespace_test.test(node_value);
+			if (result===false) {
+				node.className +=" validated_error";
+				return false;
+			}
+			else {
+				node.className +=" validated_fine";
+				return true;
+			}			
+		}
+		
+		function validate_passwords() {
+			var node = document.getElementById("password");
+			var node2 = document.getElementById("confirm_password");
+			var validation_error_element = document.getElementById("validation_errors")
+			var is_equal = node.value===node2.value;
+			if (is_equal===false) {
+				validation_error_element.appendChild(document.createTextNode("passwords do not match"));
+				validation_error_element.className += " validation_error";
+				node2.setCustomValidity("passwords do not match");
+				node.className += " validation_error";
+				node2.className += " validation_error";
+				
+				return false;
+			}
+			else {
+				node2.setCustomValidity("");
+				return true;
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<!--form-->
+	<form name=userLogin method=post action=htmlform.html autocomplete=on>
+		<fieldset>
+			<legend>Enter your log in details:</legend>
+			<label for=uname>username:</label>
+			<input id=uname type=text name=username placeholder="first and last name" maxlength=25 required />
+			<br/>
+			<label for=pwd>password:</label>
+			<input id=pwd type=password name=password placeholder=password pattern="[a-zA-Z0-9_]{5,}" title="include at least one capital letter, lowercase letter, and number" required/>
+			<br/>
+			<label for=age>age:</label>
+			<input id=age type=number min=0 max=150 />
+			<br/>
+			<label for=orderRef>order reference number:</label>
+			<input id=orderRef type=text name=orderReference pattern=[0-9]{2}[A-Z]{3} title="2 digits and 3 uppercase letters" />
+			<br/>
+			<label for=date_of_birth>date of birth:</label>
+			<input id=date_of_birth type=date name=date_of_birth min=1910-12-31 />
+			<br/>
+			<label for=datetime_of_service>date of service needed:</label>
+			<input id=datetime_of_service type=datetime-local name=datetime_of_service />
+			<br/>
+			<label for=favorite_color>favorite color:</label>
+			<input id=favorite_color type=color name=favorite_color />
+			<br/>
+			<label for=email_address>email address:</label>
+			<input id=email_address type=email name=email_address value=test@test.com />
+			<br/>
+			<label for=resume>resume:</label>
+			<input id=resume type=file name=resume />
+			<br/>
+			<label for=favorite_month>favorite month:</label>
+			<input id=favorite_month type=month name=favorite_month />
+			<br/>
+			<label for=salary>salary:</label>
+			<input id=salary_selection name=salary type=range min=1 value=10 max=90 step=1 onchange="(function(target) {document.querySelector('#salary_display').textContent=target.value;})(this)" />
+			<output id=salary_display for=salary_selection>10
+			</output>
+			<br/>
+			<label for=gender_male>male:</label>
+			<input id=gender_male type=radio name=gender value=male>
+			<br/>
+			<label for=gender_female>female:</label>
+			<input id=gender_female type=radio name=gender value=female>
+			<br />
+			<fieldset>
+				<legend>Do you own:</legend>
+				<label for=own_car>A car?</label>
+				<input id=own_car type=checkbox name=own_car value=true>
+				<label for=own_house>A house?</label>
+				<input id=own_house type=checkbox name=own_house value=true>
+			</fieldset>
+			<label for=homepage>enter homepage:</label>
+			<input id=homepage type=url name=homepage placeholder=http://example.com />
+		</fieldset>
+		<select name=auto_company>
+			<optgroup label=European>
+				<option value=volvo>Volvo</option>
+				<option value=audi>Audi</option>
+			</optgroup>
+			<optgroup label=American>
+				<option value=chrysler>chrysler</option>
+				<option value=ford>ford</option>
+			</optgroup>
+		</select>
+		<input type=submit value=send>
+	</form>
+	<form id=scoreForm onsubmit="return validate_input()">
+		<div id="validation_errors"></div>
+		score
+		<input id=score type=number name=score />
+		firstname
+		<input id=first_name type=text name=first_name />
+		
+		<input id=ageCategory type=text name=ageCategory list=ageRanges />
+		<datalist id=ageRanges>
+			<option value="Under twos"></option>
+			<option value=2-7></option>
+			<option value=8-12></option>
+			<option value=13-17></option>
+			<option value=Adult></option>
+		</datalist>
+		
+		<textarea id=car_description name=car_description placeholder="car description" cols=80 rows=5 maxlength=399></textarea>
+		
+		<label for=password>password:</label>
+		<input id=password type=password name=password2 placeholder=password pattern="[a-zA-Z0-9_]{5,}" title="include at least one capital letter, lowercase letter, and number" required/>
+		<br/>
+		<label for=confirm_password>confirm password:</label>
+		<input id=confirm_password type=password name=confirm_password placeholder=password required/>
+		<br/>		
+		
+		<input id=submit_form1 type=submit value=send>		
+	</form>
+
+	<!--input types--
+</body>
+
+</html>

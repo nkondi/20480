@@ -1,0 +1,55 @@
+<html>
+<title></title>
+
+<head>
+
+    <style>
+    </style>
+</head>
+
+<body>
+    upload file:
+    <input id=upload_control type=file />
+    <input id=upload_photo type=file />
+    <div id=text></div>
+    <img id=image />
+
+
+    <script>
+        function read_file(e) {
+            var reader = new FileReader();
+            var file = e.target.files[0];
+            reader.onload = function print_file_contents() {
+                document.getElementById("text").innerHTML += reader.result + "<br/>";
+                reader.abort();
+            }
+            reader.onerror= function notify_user_of_error() {alert(e.error)}
+            reader.readAsText(file);
+            window.setTimeout(function() {reader.readAsBinaryString(file);}, 1000);
+            window.setTimeout(function() {reader.readAsDataURL(file);}, 2000);
+            window.setTimeout(function() {reader.readAsArrayBuffer(file);}, 3000);
+        }
+        function read_image(e) {
+            var reader = new FileReader();
+            var file = e.target.files[0];
+            reader.onload = function print_file_contents() {
+                document.getElementById("image").src = reader.result;
+            }
+            reader.onerror= function notify_user_of_error() {alert(e.error)}
+            reader.readAsDataURL(file);
+        }
+
+        document.getElementById("upload_control").onchange = read_file; 
+        document.getElementById("upload_photo").onchange = read_image;
+        
+        var buffer = new ArrayBuffer(16);
+        var int_32_view = new Int32Array(buffer);
+        for (var i=0;i<int_32_view.length;i++) {
+            int_32_view[i] = i * 2;
+            console.log(int_32_view[i]);
+        }
+        
+    </script>
+</body>
+
+</html>
