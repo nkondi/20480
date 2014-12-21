@@ -20,35 +20,56 @@
             var reader = new FileReader();
             var file = e.target.files[0];
             reader.onload = function print_file_contents() {
-                document.getElementById("text").innerHTML += reader.result + "<br/>";
-                reader.abort();
-            }
-            reader.onerror= function notify_user_of_error() {alert(e.error)}
+                if (typeof(reader.result) === "object") {
+                    var string = String.fromCharCode.apply(null,new Uint8Array(reader.result));
+                    document.getElementById("text").innerHTML += string + "<br/>";
+                }
+                else {
+                    document.getElementById("text").innerHTML += reader.result + "<br/>";
+                    reader.abort();
+                }
+            };
+            reader.onerror = function notify_user_of_error() {
+                alert(e.error);
+            };
             reader.readAsText(file);
-            window.setTimeout(function() {reader.readAsBinaryString(file);}, 1000);
-            window.setTimeout(function() {reader.readAsDataURL(file);}, 2000);
-            window.setTimeout(function() {reader.readAsArrayBuffer(file);}, 3000);
+            window.setTimeout(function() {
+                reader.readAsBinaryString(file)
+            }, 2000);
+            window.setTimeout(function() {
+                reader.readAsArrayBuffer(file)
+            }, 4000);
+            window.setTimeout(function() {
+                reader.onload = function show_data_url_data_in_window(e) {
+                    window.open(reader.result, "data_url", "height=100,width=100");
+                    reader.abort();
+                };
+                reader.readAsDataURL(file);
+            }, 6000);
         }
+
         function read_image(e) {
             var reader = new FileReader();
             var file = e.target.files[0];
             reader.onload = function print_file_contents() {
                 document.getElementById("image").src = reader.result;
-            }
-            reader.onerror= function notify_user_of_error() {alert(e.error)}
+            };
+            reader.onerror = function notify_user_of_error() {
+                alert(e.error);
+            };
             reader.readAsDataURL(file);
         }
 
-        document.getElementById("upload_control").onchange = read_file; 
+        document.getElementById("upload_control").onchange = read_file;
         document.getElementById("upload_photo").onchange = read_image;
-        
+
+        /*raw buffers*/
         var buffer = new ArrayBuffer(16);
         var int_32_view = new Int32Array(buffer);
-        for (var i=0;i<int_32_view.length;i++) {
+        for (var i = 0; i < int_32_view.length; i++) {
             int_32_view[i] = i * 2;
             console.log(int_32_view[i]);
         }
-        
     </script>
 </body>
 
